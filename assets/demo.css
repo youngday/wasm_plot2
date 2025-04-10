@@ -1,0 +1,295 @@
+body {
+    background: repeating-radial-gradient(circle at center 2em, #eee, #12a5ed);
+    min-height: 100vh;
+}
+
+p {
+    max-width: 40em;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #fc7089;
+    font-size: 100%;
+    padding: 0.5em 1em;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0.5em;
+    justify-content: space-between;
+    align-items: end;
+}
+
+header>* {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0.5em;
+    justify-content: space-between;
+}
+
+header>h2 {
+    margin: 0 3em 0 0;
+    font-size: 100%;
+    /* Remove styled heading */
+    background-color: inherit;
+    border: none;
+    padding: 0;
+}
+
+header p {
+    margin: 0;
+}
+
+header>nav>p {
+    margin: 0 1em;
+}
+
+header a {
+    padding: 0.2em 0;
+}
+
+h1>a,
+h2>a,
+h3>a,
+h4>a,
+h5>a,
+h6>a,
+header a,
+.always-underline {
+    text-decoration: none;
+    color: #222;
+}
+
+h1>a:hover,
+h2>a:hover,
+h3>a:hover,
+h4>a:hover,
+h5>a:hover,
+h6>a:hover,
+header a:hover,
+.always-underline {
+    text-decoration: underline;
+    text-decoration-color: #fc7089;
+    text-decoration-thickness: 0.3em;
+    text-underline-position: under;
+}
+
+.always-underline {
+    width: fit-content;
+}
+
+header>.badges a>img {
+    display: block;
+}
+
+main {
+    margin: 1em;
+}
+
+#demo>._chartistry {
+    background-color: #fff;
+    border: 1px solid #000;
+    margin: 1em auto;
+    width: fit-content;
+}
+
+#demo>.outer {
+    margin: 1em auto;
+    display: flex;
+    gap: 1em 0.5em;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+fieldset {
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 0.5em;
+    padding: 0.5em 1em 1em 1em;
+    display: grid;
+    grid-template-columns: max-content 1fr repeat(3, min-content);
+    align-items: baseline;
+}
+
+fieldset>h3 {
+    grid-column: 2 / -1;
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0;
+    align-self: end;
+    padding: 0.2em 0.5em;
+}
+
+fieldset>p {
+    display: contents;
+}
+
+fieldset>p> :nth-child(1) {
+    grid-column: 1;
+    text-align: right;
+}
+
+fieldset>p> :nth-child(2) {
+    grid-column: 2;
+    padding: 0.2em 0.5em;
+}
+
+fieldset>p> :nth-child(3) {
+    grid-column: 3;
+}
+
+fieldset>p> :nth-child(4) {
+    grid-column: 4;
+}
+
+fieldset>p> :nth-child(5) {
+    grid-column: 5;
+}
+
+fieldset input[type=number] {
+    width: 6ch;
+}
+
+fieldset input[type=color] {
+    width: 6ch;
+    height: 1.6em;
+}
+
+h1,
+h2,
+h3,
+fieldset>legend {
+    background-color: #fff;
+    margin: 0;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+fieldset>legend {
+    grid-column: span 2;
+    float: left;
+    text-align: center;
+    margin-bottom: 0.5em;
+    color: #222;
+}
+
+.cards-row>h2 {
+    border-top: 0.2em solid #fc7089;
+    border-radius: 0.5em;
+    padding: 0.5em 2em;
+}
+
+._chartistry h2,
+._chartistry h3 {
+    /* Undo our headings in charts */
+    background-color: inherit;
+    border-bottom: 0;
+    padding: 0;
+}
+
+.background-box {
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 0.5em;
+    padding: 1em;
+}
+
+.cards-row {
+    display: flex;
+    flex-flow: row;
+    margin: 1em 0;
+    gap: 2em 0.5em;
+}
+
+.cards-row>h2 {
+    border: 1px solid #999;
+    border-left: 0.2em solid #fc7089;
+    padding: 1em;
+    writing-mode: vertical-lr;
+}
+
+.cards {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0.5em;
+}
+
+
+.cards h2>em {
+    font-weight: normal;
+}
+
+.cards figure {
+    margin: 0;
+    width: calc(300px + 2.5em);
+}
+
+.cards figure.slim {
+    width: min-content;
+}
+
+.cards figure.my-theme {
+    border: 1px solid #fff;
+}
+
+.cards figure.my-theme figcaption h1,
+.cards figure.my-theme figcaption h3 {
+    background-color: #2b303b;
+}
+
+.cards figure.my-theme figcaption h1>a,
+.cards figure.my-theme figcaption h3>a {
+    color: #c0c5ce !important;
+}
+
+.cards figure.my-theme p a {
+    color: #fc7089;
+}
+
+#examples dialog {
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 0.5em;
+    padding: 0;
+}
+
+#examples dialog>pre {
+    margin: 0;
+    padding: 5em;
+}
+
+::backdrop {
+    background-color: rgba(200, 200, 200, 0.75);
+}
+
+#examples section {
+    margin: 1em 0;
+}
+
+#aspect-ratio>._chartistry:first-child {
+    width: 40em;
+}
+
+.example .demo {
+    width: fit-content;
+    padding: 1em 2em;
+}
+
+.debug-box {
+    width: fit-content;
+    height: fit-content;
+}
+
+.example .code {
+    /* From syntax theme in build.rs */
+    background-color: #2b303b;
+    border: 1px solid #fff;
+    margin: 1em auto;
+    /* Keep vaguely left aligned */
+    margin-left: 0;
+    width: fit-content;
+}
+
+.example .code pre {
+    margin: 0;
+}
