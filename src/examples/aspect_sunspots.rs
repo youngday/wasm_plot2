@@ -24,9 +24,11 @@ pub fn AspectRatioSunspots(debug: Signal<bool>) -> impl IntoView {
     };
 
     view! {
-        <p>"The following chart is of sunspot activity from 1700 to 2020. Its "
-        "width stretches the page and has a fixed height. Note the large ups "
-        "and downs in the chart whose interpretation changes with page width."</p>
+        <p>
+            "The following chart is of sunspot activity from 1700 to 2020. Its "
+            "width stretches the page and has a fixed height. Note the large ups "
+            "and downs in the chart whose interpretation changes with page width."
+        </p>
         <div style:width=frame_width>
             <Chart
                 debug=debug
@@ -46,18 +48,31 @@ pub fn AspectRatioSunspots(debug: Signal<bool>) -> impl IntoView {
                 tooltip=Tooltip::left_cursor()
 
                 series=series.clone()
-                data=Signal::derive(data::daily_sunspots) />
+                data=Signal::derive(data::daily_sunspots)
+            />
         </div>
 
-        <p>"Try changing the chart width and see how the chart looks different "
-        "rather than losing detail:"</p>
-        <p><input style="width: 100%"
-            type="range" min="0" max="1" step="0.01"
-            value=width on:input=change_width /></p>
+        <p>
+            "Try changing the chart width and see how the chart looks different "
+            "rather than losing detail:"
+        </p>
+        <p>
+            <input
+                style="width: 100%"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value=width
+                on:input=change_width
+            />
+        </p>
 
-        <p>"We can make more sense of the data—and see more useful patterns—by "
-        "setting a fixed ratio for a chart. This can be done by supplying two "
-        "variables from the formula: " <code>"width / height = ratio"</code>.</p>
+        <p>
+            "We can make more sense of the data—and see more useful patterns—by "
+            "setting a fixed ratio for a chart. This can be done by supplying two "
+            "variables from the formula: " <code>"width / height = ratio"</code>.
+        </p>
         <div style:width=frame_width style="height: 90px;">
             <Chart
                 debug=debug
@@ -71,11 +86,15 @@ pub fn AspectRatioSunspots(debug: Signal<bool>) -> impl IntoView {
                 tooltip=Tooltip::left_cursor()
 
                 series=series
-                data=Signal::derive(data::daily_sunspots) />
+                data=Signal::derive(data::daily_sunspots)
+            />
         </div>
 
-        <p>"Source: "<a href="https://www.sidc.be/silso/">"Sunspot data from "
-        "the World Data Center SILSO"</a>", Royal Observatory of Belgium, "
-        "Brussels"</p>
+        <p>
+            "Source: "
+            <a href="https://www.sidc.be/silso/">
+                "Sunspot data from " "the World Data Center SILSO"
+            </a>", Royal Observatory of Belgium, " "Brussels"
+        </p>
     }
 }

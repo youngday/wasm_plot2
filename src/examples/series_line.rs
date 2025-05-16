@@ -20,7 +20,6 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
             left=TickLabels::aligned_floats()
             bottom=Legend::end()
             inner=[
-                // Standard set of inner layout options
                 AxisMarker::left_edge().into_inner(),
                 AxisMarker::bottom_edge().into_inner(),
                 XGridLine::default().into_inner(),

@@ -15,12 +15,7 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
             series=series
             data=data
 
-            inner=vec![
-                // Pick a place for your legend...
-                InsetLegend::top().into_inner(),
-                // ...and it will appear inside the chart area
-                InsetLegend::bottom_right().into_inner()
-            ]
+            inner=vec![InsetLegend::top().into_inner(), InsetLegend::bottom_right().into_inner()]
         />
     }
 }

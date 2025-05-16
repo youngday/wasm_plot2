@@ -17,10 +17,7 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
 
             top=RotatedLabel::middle("Your chart title")
             left=TickLabels::aligned_floats()
-            bottom=vec![
-                TickLabels::aligned_floats().into_edge(),
-                Legend::end().into_edge()
-            ]
+            bottom=vec![TickLabels::aligned_floats().into_edge(), Legend::end().into_edge()]
         />
     }
 }

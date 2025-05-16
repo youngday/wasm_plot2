@@ -17,13 +17,9 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
             data=data
 
             inner=vec![
-                // Axis markers run along the edge of an axis, usually along the edge
                 AxisMarker::bottom_edge().into_inner(),
-                // However they can also be placed at zero (if shown)
                 AxisMarker::horizontal_zero().into_inner(),
-                // Or at the top edge if that makes sense for your chart
                 AxisMarker::top_edge().into_inner(),
-                // We can also remove embellishments (the arrow) from the marker
                 AxisMarker::left_edge().with_arrow(false).into_inner(),
             ]
         />
