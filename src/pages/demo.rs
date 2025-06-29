@@ -101,16 +101,21 @@ pub struct Wave {
 const Y2K: f64 = 946_684_800f64;
 const ONE_DAY: f64 = 86_400f64;
 
+use chrono::Utc;
+
 fn load_data() -> Vec<Wave> {
     const RANGE: f64 = 360.0 * 3.0;
     let mut data = Vec::new();
+    let now = Utc::now().timestamp() as f64;
     for i in 0..100 {
         let deg = RANGE * (i as f64 / 100.0);
-        let rad = deg * std::f64::consts::PI / 180.0;
+        let rad: f64 = deg * std::f64::consts::PI / 180.0;
+        // 基于当前时间生成偏移量
+        let time_offset = now.sin();
         data.push(Wave {
             x: f64_to_dt(Y2K + ONE_DAY * deg),
-            sine: rad.sin(),
-            cosine: rad.cos(),
+            sine: rad.sin() + time_offset,
+            cosine: rad.cos() + time_offset,
         });
     }
     data
@@ -137,17 +142,28 @@ pub fn Demo() -> impl IntoView {
     let ratio = RwSignal::new(1.0);
 
     // Data
-    let (data, _) = signal(load_data());
+    let data = RwSignal::new(load_data());
+
+    // Set up interval to refresh data every 5 seconds
+    set_interval(
+        move || {
+            let new_data = load_data();
+            data.set(new_data);
+        },
+        std::time::Duration::from_millis(50),
+    );
+
+    // Lines
     let lines = vec![
         Line::new(|w: &Wave| w.sine)
-            .with_name("sine")
-            .with_interpolation(Interpolation::Monotone),
+           .with_name("sine")
+           .with_interpolation(Interpolation::Monotone),
         Line::new(|w: &Wave| w.cosine)
-            .with_name("cosine")
-            .with_marker(
+           .with_name("cosine")
+           .with_marker(
                 Marker::from_shape(MarkerShape::Circle)
-                    .with_colour(WHITE)
-                    .with_border_width(1.0),
+                   .with_colour(WHITE)
+                   .with_border_width(1.0),
             ),
     ];
     let edit_lines = lines.clone();
@@ -231,7 +247,7 @@ pub fn Demo() -> impl IntoView {
                     inner=inner.get().into_inner()
                     tooltip=tooltip.clone()
                     series=series.clone()
-                    data=data
+                    data=data.get() // Pass the current data value
                 />
             }.into_any()}
 
