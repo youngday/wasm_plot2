@@ -40,9 +40,11 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
             data=data
 
             inner=vec![
+                // Most drawn elements can have their colour changed
                 AxisMarker::left_edge().with_colour(BLACK).into_inner(),
                 YGridLine::default().with_colour(THISTLE).into_inner(),
                 YGuideLine::over_mouse().with_colour(sea_green).into_inner(),
+                // Legends pick their colours from the lines they're describing
                 InsetLegend::bottom_right().into_inner(),
             ]
         />

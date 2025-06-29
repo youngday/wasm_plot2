@@ -149,32 +149,32 @@ impl Example {
         let de = use_app_context().debug.into();
         let da = load_data();
         match self {
-            Self::Line => view! { <series_line::Example debug=de data=da /> }.into_any(),
-            Self::StackedLine => view! { <series_line_stack::Example debug=de data=da /> }.into_any(),
-            Self::Bar => view! { <series_bar::Example debug=de data=da /> }.into_any(),
-            Self::Legend => view! { <edge_legend::Example debug=de data=da /> }.into_any(),
-            Self::TickLabels => view! { <edge_tick_labels::Example debug=de data=da /> }.into_any(),
+            Self::Line => view! {<series_line::Example debug=de data=da />}.into_any(),
+            Self::StackedLine => view! {<series_line_stack::Example debug=de data=da />}.into_any(),
+            Self::Bar => view! {<series_bar::Example debug=de data=da />}.into_any(),
+            Self::Legend => view! {<edge_legend::Example debug=de data=da />}.into_any(),
+            Self::TickLabels => view! {<edge_tick_labels::Example debug=de data=da />}.into_any(),
             Self::RotatedLabel => {
-                view! { <edge_rotated_label::Example debug=de data=da /> }.into_any()
+                view! {<edge_rotated_label::Example debug=de data=da />}.into_any()
             }
-            Self::EdgeLayout => view! { <edge_layout::Example debug=de data=da /> }.into_any(),
-            Self::AxisMarker => view! { <inner_axis_marker::Example debug=de data=da /> }.into_any(),
-            Self::GridLine => view! { <inner_grid_line::Example debug=de data=da /> }.into_any(),
-            Self::GuideLine => view! { <inner_guide_line::Example debug=de data=da /> }.into_any(),
-            Self::InsetLegend => view! { <inner_legend::Example debug=de data=da /> }.into_any(),
-            Self::InnerLayout => view! { <inner_layout::Example debug=de data=da /> }.into_any(),
+            Self::EdgeLayout => view! {<edge_layout::Example debug=de data=da />}.into_any(),
+            Self::AxisMarker => view! {<inner_axis_marker::Example debug=de data=da />}.into_any(),
+            Self::GridLine => view! {<inner_grid_line::Example debug=de data=da />}.into_any(),
+            Self::GuideLine => view! {<inner_guide_line::Example debug=de data=da />}.into_any(),
+            Self::InsetLegend => view! {<inner_legend::Example debug=de data=da />}.into_any(),
+            Self::InnerLayout => view! {<inner_layout::Example debug=de data=da />}.into_any(),
             Self::MixedInterpolation => {
-                view! { <interpolation_mixed::Example debug=de data=da /> }.into_any()
+                view! {<interpolation_mixed::Example debug=de data=da />}.into_any()
             }
-            Self::Stepped => view! { <interpolation_stepped::Example debug=de data=da /> }.into_any(),
-            Self::Tooltip => view! { <feature_tooltip::Example debug=de data=da /> }.into_any(),
-            Self::Colours => view! { <feature_colours::Example debug=de data=da /> }.into_any(),
-            Self::Markers => view! { <feature_markers::Example debug=de data=da /> }.into_any(),
-            Self::Markers2 => view! { <feature_markers_2::Example debug=de data=da /> }.into_any(),
+            Self::Stepped => view! {<interpolation_stepped::Example debug=de data=da />}.into_any(),
+            Self::Tooltip => view! {<feature_tooltip::Example debug=de data=da />}.into_any(),
+            Self::Colours => view! {<feature_colours::Example debug=de data=da />}.into_any(),
+            Self::Markers => view! {<feature_markers::Example debug=de data=da />}.into_any(),
+            Self::Markers2 => view! {<feature_markers_2::Example debug=de data=da />}.into_any(),
             Self::LineGradient => {
-                view! { <feature_line_gradient::Example debug=de data=da /> }.into_any()
+                view! {<feature_line_gradient::Example debug=de data=da />}.into_any()
             }
-            Self::Css => view! { <feature_css::Example debug=de data=da /> }.into_any(),
+            Self::Css => view! {<feature_css::Example debug=de data=da />}.into_any(),
         }
     }
 }
@@ -185,21 +185,18 @@ fn Card(example: Example, #[prop(optional)] h1: bool) -> impl IntoView {
     let url = format!("examples/{id}.html");
     let heading = if h1 {
         Either::Left(view! {
-            <h1 id=id>
-                <a href=url.clone()>{example.title()}</a>
-            </h1>
+            <h1 id=id><a href=url.clone()>{example.title()}</a></h1>
         })
     } else {
         Either::Right(view! {
-            <h3 id=id>
-                <a href=url.clone()>{example.title()}</a>
-            </h3>
+            <h3 id=id><a href=url.clone()>{example.title()}</a></h3>
         })
     };
     view! {
         <figure class:background-box=true class=example.extra_class()>
             <figcaption>
-                {heading} <p>{example.description()} " " <a href=url>"Show example code"</a></p>
+                {heading}
+                <p>{example.description()} " " <a href=url>"Show example code"</a></p>
             </figcaption>
             {example.card_view()}
         </figure>
@@ -214,11 +211,8 @@ pub fn view_example(example: Example) -> impl IntoView {
                 <Card example=example h1=true />
                 <div class="background-box debug-box">
                     <label>
-                        <input
-                            type="checkbox"
-                            prop:checked=app.debug
-                            on:input=move |ev| app.debug.set(event_target_checked(&ev))
-                        />
+                        <input type="checkbox" prop:checked=app.debug
+                            on:input=move |ev| app.debug.set(event_target_checked(&ev)) />
                         " Toggle debug mode"
                     </label>
                 </div>
@@ -239,19 +233,14 @@ pub fn Examples() -> impl IntoView {
         <article id="examples">
             <p class="debug-box background-box">
                 <label>
-                    <input
-                        type="checkbox"
-                        prop:checked=app.debug
-                        on:input=move |ev| app.debug.set(event_target_checked(&ev))
-                    />
+                    <input type="checkbox" prop:checked=app.debug
+                        on:input=move |ev| app.debug.set(event_target_checked(&ev)) />
                     " Toggle debug mode"
                 </label>
             </p>
 
             <div id="line" class="cards-row">
-                <h2>
-                    <a href="examples.html#line">"Charts"</a>
-                </h2>
+                <h2><a href="examples.html#line">"Charts"</a></h2>
                 <div class="cards">
                     <Card example=Example::Line />
                     <Card example=Example::StackedLine />
@@ -260,9 +249,7 @@ pub fn Examples() -> impl IntoView {
             </div>
 
             <div id="edge" class="cards-row">
-                <h2>
-                    <a href="examples.html#edge">"Edge layout options"</a>
-                </h2>
+                <h2><a href="examples.html#edge">"Edge layout options"</a></h2>
                 <div class="cards">
                     <Card example=Example::Legend />
                     <Card example=Example::TickLabels />
@@ -272,9 +259,7 @@ pub fn Examples() -> impl IntoView {
             </div>
 
             <div id="inner" class="cards-row">
-                <h2>
-                    <a href="examples.html#inner">"Inner layout options"</a>
-                </h2>
+                <h2><a href="examples.html#inner">"Inner layout options"</a></h2>
                 <div class="cards">
                     <Card example=Example::AxisMarker />
                     <Card example=Example::GridLine />
@@ -285,9 +270,7 @@ pub fn Examples() -> impl IntoView {
             </div>
 
             <div id="interpolation" class="cards-row">
-                <h2>
-                    <a href="examples.html#interpolation">"Line interpolation"</a>
-                </h2>
+                <h2><a href="examples.html#interpolation">"Line interpolation"</a></h2>
                 <div class="cards">
                     <Card example=Example::MixedInterpolation />
                     <Card example=Example::Stepped />
@@ -295,9 +278,7 @@ pub fn Examples() -> impl IntoView {
             </div>
 
             <div id="features" class="cards-row">
-                <h2>
-                    <a href="examples.html#features">"Features"</a>
-                </h2>
+                <h2><a href="examples.html#features">"Features"</a></h2>
                 <div class="cards">
                     <Card example=Example::Tooltip />
                     <Card example=Example::Colours />
@@ -309,9 +290,7 @@ pub fn Examples() -> impl IntoView {
             </div>
 
             <section id="aspect-ratio" class="background-box">
-                <h2 class="always-underline">
-                    <a href="examples.html#aspect-ratio">"Aspect ratio"</a>
-                </h2>
+                <h2 class="always-underline"><a href="examples.html#aspect-ratio">"Aspect ratio"</a></h2>
                 <AspectRatioSunspots debug=app.debug.into() />
             </section>
         </article>

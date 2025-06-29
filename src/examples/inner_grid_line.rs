@@ -16,8 +16,12 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
             data=data
 
             inner=vec![
+                // Draw grid lines aligned to the default tick labels
                 XGridLine::default().into_inner(),
-                YGridLine::from_ticks(y_ticks).into_inner(),
+                // We can also specify our own tick labels for consistency e.g.,
+                // we could have ticks aligned to only years rather than a
+                // selection of periods -- we want our grid lines to follow
+                YGridLine::from_ticks(y_ticks).into_inner()
             ]
         />
     }

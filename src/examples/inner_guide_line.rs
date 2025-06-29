@@ -14,7 +14,13 @@ pub fn Example(debug: Signal<bool>, data: Signal<Vec<MyData>>) -> impl IntoView 
             series=series
             data=data
 
-            inner=vec![YGuideLine::over_mouse().into_inner(), XGuideLine::over_data().into_inner()]
+            inner=vec![
+                // Draw a line on the chart area when the mouse hovers
+                YGuideLine::over_mouse().into_inner(),
+                // Instead, they be drawn over the nearest data point
+                // This creates a "snap-to" effect
+                XGuideLine::over_data().into_inner()
+            ]
         />
     }
 }

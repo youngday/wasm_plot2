@@ -217,57 +217,41 @@ pub fn Demo() -> impl IntoView {
 
     view! {
         <article id="demo">
-            {move || {
-                view! {
-                    <Chart
-                        aspect_ratio=derive_aspect_ratio(aspect, calc, width, height, ratio)
-                        font_height=font_height
-                        font_width=font_width
-                        debug=debug
-                        padding=Signal::derive(move || Padding::from(padding.get()))
-                        top=top.get().into_inner()
-                        right=right.get().into_inner()
-                        bottom=bottom.get().into_inner()
-                        left=left.get().into_inner()
-                        inner=inner.get().into_inner()
-                        tooltip=tooltip.clone()
-                        series=series.clone()
-                        data=data
-                    />
-                }
-                    .into_any()
-            }}
+            {move || view!{
+                <Chart
+                    aspect_ratio=derive_aspect_ratio(aspect, calc, width, height, ratio)
+                    font_height=font_height
+                    font_width=font_width
+                    debug=debug
+                    padding=Signal::derive(move || Padding::from(padding.get()))
+                    top=top.get().into_inner()
+                    right=right.get().into_inner()
+                    bottom=bottom.get().into_inner()
+                    left=left.get().into_inner()
+                    inner=inner.get().into_inner()
+                    tooltip=tooltip.clone()
+                    series=series.clone()
+                    data=data
+                />
+            }.into_any()}
+
             <div class="outer">
                 <fieldset class="options">
                     <legend>"Chart options"</legend>
                     <p>
                         <span>
-                            <input
-                                type="checkbox"
-                                id="debug"
-                                checked=debug
-                                on:input=move |ev| set_debug.set(event_target_checked(&ev))
-                            />
+                            <input type="checkbox" id="debug" checked=debug
+                                on:input=move |ev| set_debug.set(event_target_checked(&ev)) />
                         </span>
-                        <span>
-                            <label for="debug">"Debug"</label>
-                        </span>
+                        <span><label for="debug">"Debug"</label></span>
                     </p>
                     <p>
                         <label for="aspect">"Aspect ratio"</label>
-                        <AspectRatio
-                            aspect=aspect
-                            calc=calc
-                            width=width
-                            height=height
-                            ratio=ratio
-                        />
+                        <AspectRatio aspect=aspect calc=calc width=width height=height ratio=ratio />
                     </p>
                     <p>
                         <label for="padding">"Padding"</label>
-                        <span>
-                            <StepInput id="padding" value=padding step="0.1" min="0.1" />
-                        </span>
+                        <span><StepInput id="padding" value=padding step="0.1" min="0.1" /></span>
                     </p>
 
                     <p>
@@ -286,9 +270,7 @@ pub fn Demo() -> impl IntoView {
                     <legend>"Series options"</legend>
                     <p>
                         <label for="series_scheme">"Scheme"</label>
-                        <span>
-                            <SelectColourScheme colours=series_colours lines=series_len />
-                        </span>
+                        <span><SelectColourScheme colours=series_colours lines=series_len /></span>
                     </p>
                     <p>
                         <label for="line_index">"Line"</label>
@@ -297,49 +279,32 @@ pub fn Demo() -> impl IntoView {
                                 <For
                                     each=move || lines.clone().into_iter().enumerate()
                                     key=|(i, _)| *i
-                                    let:line
-                                >
-                                    <option value=line.0 selected=line.0 == line_tab.get()>
-                                        {line.1.name}
-                                    </option>
+                                    let:line>
+                                    <option value=line.0 selected=line.0 == line_tab.get()>{line.1.name}</option>
                                 </For>
                             </select>
                         </span>
                     </p>
-                    {move || {
-                        view! {
-                            <SeriesLineOpts
-                                line=edit_lines[line_tab.get()].clone()
-                                colour=series_colours.get().by_index(line_tab.get())
-                            />
-                        }
+                    {move || view!{
+                        <SeriesLineOpts
+                            line=edit_lines[line_tab.get()].clone()
+                            colour=series_colours.get().by_index(line_tab.get()) />
                     }}
                 </fieldset>
 
                 <fieldset class="series">
                     <legend>"Axis options"</legend>
-                    <p>
-                        <span>"Y axis"</span>
-                        <span>"Aligned floats"</span>
-                    </p>
+                    <p><span>"Y axis"</span><span>"Aligned floats"</span></p>
                     <p>
                         <label for="min_y">"Range"</label>
                         <span>
-                            <input
-                                type="number"
-                                id="min_y"
-                                step="0.1"
+                            <input type="number" id="min_y" step="0.1"
                                 value=move || min_y.get().map(|v| v.to_string()).unwrap_or_default()
-                                on:change=move |ev| min_y.set(event_target_value(&ev).parse().ok())
-                            />
+                                on:change=move |ev| min_y.set(event_target_value(&ev).parse().ok()) />
                             " to "
-                            <input
-                                type="number"
-                                id="max_y"
-                                step="0.1"
+                            <input type="number" id="max_y" step="0.1"
                                 value=move || max_y.get().map(|v| v.to_string()).unwrap_or_default()
-                                on:change=move |ev| max_y.set(event_target_value(&ev).parse().ok())
-                            />
+                                on:change=move |ev| max_y.set(event_target_value(&ev).parse().ok()) />
                         </span>
                     </p>
                     <p>
@@ -349,56 +314,25 @@ pub fn Demo() -> impl IntoView {
                     <p>
                         <label for="min_x">"Range"</label>
                         <span>
-                            <input
-                                type="datetime-local"
-                                id="min_x"
+                            <input type="datetime-local" id="min_x"
                                 value=mk_range_ts(min_x)
-                                on:change=on_datetime_change(min_x)
-                            />
+                                on:change=on_datetime_change(min_x) />
                             " to "
                             <br />
-                            <input
-                                type="datetime-local"
-                                id="max_x"
+                            <input type="datetime-local" id="max_x"
                                 value=mk_range_ts(max_x)
-                                on:change=on_datetime_change(max_x)
-                            />
+                                on:change=on_datetime_change(max_x) />
                         </span>
                     </p>
                 </fieldset>
 
                 <TooltipCard tooltip=tooltip_card />
 
-                <OptionsCard
-                    title="Inner options"
-                    options=inner
-                    labels=ALL_INNER_OPTIONS
-                    detail=inner_layout_opts
-                />
-                <OptionsCard
-                    title="Top"
-                    options=top
-                    labels=ALL_EDGE_OPTIONS
-                    detail=edge_layout_opts
-                />
-                <OptionsCard
-                    title="Bottom"
-                    options=bottom
-                    labels=ALL_EDGE_OPTIONS
-                    detail=edge_layout_opts
-                />
-                <OptionsCard
-                    title="Left"
-                    options=left
-                    labels=ALL_EDGE_OPTIONS
-                    detail=edge_layout_opts
-                />
-                <OptionsCard
-                    title="Right"
-                    options=right
-                    labels=ALL_EDGE_OPTIONS
-                    detail=edge_layout_opts
-                />
+                <OptionsCard title="Inner options" options=inner labels=ALL_INNER_OPTIONS detail=inner_layout_opts />
+                <OptionsCard title="Top" options=top labels=ALL_EDGE_OPTIONS detail=edge_layout_opts />
+                <OptionsCard title="Bottom" options=bottom labels=ALL_EDGE_OPTIONS detail=edge_layout_opts />
+                <OptionsCard title="Left" options=left labels=ALL_EDGE_OPTIONS detail=edge_layout_opts />
+                <OptionsCard title="Right" options=right labels=ALL_EDGE_OPTIONS detail=edge_layout_opts />
             </div>
         </article>
     }.into_any()
@@ -440,19 +374,9 @@ where
                     <p>
                         <span>{Label::from(opt.clone()).to_string()}</span>
                         <span>{detail(opt)}</span>
-                        <span>
-                            {(i != 0)
-                                .then_some(view! { <button on:click=on_move_up(i)>"↑"</button> })}
-                        </span>
-                        <span>
-                            {(i != last)
-                                .then_some(
-                                    view! { <button on:click=on_move_down(i)>"↓"</button> },
-                                )}
-                        </span>
-                        <span>
-                            <button on:click=on_remove(i)>"x"</button>
-                        </span>
+                        <span>{(i != 0).then_some(view!(<button on:click=on_move_up(i)>"↑"</button>))}</span>
+                        <span>{(i != last).then_some(view!(<button on:click=on_move_down(i)>"↓"</button>))}</span>
+                        <span><button on:click=on_remove(i)>"x"</button></span>
                     </p>
                 }
             })
@@ -469,9 +393,7 @@ where
                 <span>
                     <select on:change=on_label_change>
                         <For each=move || labels key=|label| label.to_string() let:label>
-                            <option selected=move || {
-                                option.get() == *label
-                            }>{label.to_string()}</option>
+                            <option selected=move || option.get() == *label>{label.to_string()}</option>
                         </For>
                     </select>
                     " "
@@ -684,28 +606,48 @@ impl<X: Tick, Y: Tick> From<InnerOption> for InnerLayout<X, Y> {
 
 fn edge_layout_opts<XY: Tick>(option: EdgeLayout<XY>) -> impl IntoView {
     match option {
-        EdgeLayout::RotatedLabel(label) => EitherOf4::A(view! { <RotatedLabelOpts label=label /> }),
-        EdgeLayout::Legend(legend) => EitherOf4::B(view! { <LegendOpts legend=legend /> }),
-        EdgeLayout::TickLabels(ticks) => EitherOf4::C(view! { <TickLabelsOpts ticks=ticks /> }),
+        EdgeLayout::RotatedLabel(label) => EitherOf4::A(view! {
+            <RotatedLabelOpts label=label />
+        }),
+        EdgeLayout::Legend(legend) => EitherOf4::B(view! {
+            <LegendOpts legend=legend />
+        }),
+        EdgeLayout::TickLabels(ticks) => EitherOf4::C(view! {
+            <TickLabelsOpts ticks=ticks />
+        }),
         _ => EitherOf4::D(()),
     }
 }
 
 fn inner_layout_opts<X: Tick, Y: Tick>(option: InnerLayout<X, Y>) -> impl IntoView {
     match option {
-        InnerLayout::AxisMarker(marker) => EitherOf7::A(view! { <AxisMarkerOpts marker=marker /> }),
-        InnerLayout::Legend(legend) => EitherOf7::B(view! { <InsetLegendOpts legend=legend /> }),
-        InnerLayout::XGridLine(line) => EitherOf7::C(view! { <GridLineOpts width=line.width colour=line.colour /> }),
-        InnerLayout::YGridLine(line) => EitherOf7::D(view! { <GridLineOpts width=line.width colour=line.colour /> }),
-        InnerLayout::XGuideLine(line) => EitherOf7::E(view! { <GuideLineOpts align=line.align width=line.width colour=line.colour /> }),
-        InnerLayout::YGuideLine(line) => EitherOf7::F(view! { <GuideLineOpts align=line.align width=line.width colour=line.colour /> }),
+        InnerLayout::AxisMarker(marker) => EitherOf7::A(view! {
+            <AxisMarkerOpts marker=marker />
+        }),
+        InnerLayout::Legend(legend) => EitherOf7::B(view! {
+            <InsetLegendOpts legend=legend />
+        }),
+        InnerLayout::XGridLine(line) => EitherOf7::C(view! {
+            <GridLineOpts width=line.width colour=line.colour />
+        }),
+        InnerLayout::YGridLine(line) => EitherOf7::D(view! {
+            <GridLineOpts width=line.width colour=line.colour />
+        }),
+        InnerLayout::XGuideLine(line) => EitherOf7::E(view! {
+            <GuideLineOpts align=line.align width=line.width colour=line.colour />
+        }),
+        InnerLayout::YGuideLine(line) => EitherOf7::F(view! {
+            <GuideLineOpts align=line.align width=line.width colour=line.colour />
+        }),
         _ => EitherOf7::G(()),
     }
 }
 
 #[component]
 fn WidthInput(width: RwSignal<f64>) -> impl IntoView {
-    view! { <label>"width:"<StepInput value=width step="0.1" min="0" /></label> }
+    view! {
+        <label>"width:"<StepInput value=width step="0.1" min="0" /></label>
+    }
 }
 
 #[component]
@@ -728,8 +670,7 @@ fn StepInput<T: Clone + Default + ToString + FromStr + Send + Sync + 'static>(
             min=min
             max=max
             value=move || value.get().to_string()
-            on:input=on_change
-        />
+            on:input=on_change />
     }
 }
 
@@ -826,7 +767,9 @@ fn SelectColour(
             colour.set(value);
         }
     };
-    view! { <input type="color" id=id value=move || colour.get().to_string() on:input=on_change /> }
+    view! {
+        <input type="color" id=id value=move || colour.get().to_string() on:input=on_change />
+    }
 }
 
 #[component]
@@ -854,8 +797,7 @@ fn SelectOptionColour(
                 type="checkbox"
                 id=move || (!enabled()).then_some(id)
                 checked=enabled
-                on:input=toggle_enabled
-            />
+                on:input=toggle_enabled />
             " "
             <Show when=move || !enabled()>{none}</Show>
         </label>
@@ -877,11 +819,9 @@ fn SelectColourScheme(colours: RwSignal<ColourScheme>, lines: usize) -> impl Int
                 }
             };
             view! {
-                <input
-                    type="color"
+                <input type="color"
                     value=move || colours.get().by_index(line).to_string()
-                    on:input=on_change
-                />
+                    on:input=on_change />
             }
         })
         .collect_view()
@@ -892,22 +832,22 @@ fn RotatedLabelOpts(label: RotatedLabel) -> impl IntoView {
     view! {
         <SelectAnchor anchor=label.anchor />
         " "
-        <input
-            type="text"
-            value=label.text
-            on:input=move |ev| label.text.set(event_target_value(&ev))
-        />
+        <input type="text" value=label.text on:input=move |ev| label.text.set(event_target_value(&ev)) />
     }
 }
 
 #[component]
 fn LegendOpts(legend: Legend) -> impl IntoView {
-    view! { <SelectAnchor anchor=legend.anchor /> }
+    view! {
+        <SelectAnchor anchor=legend.anchor />
+    }
 }
 
 #[component]
 fn TickLabelsOpts<XY: Tick>(ticks: TickLabels<XY>) -> impl IntoView {
-    view! { <label>"min width:"<StepInput value=ticks.min_chars step="1" min="0" /></label> }
+    view! {
+        <label>"min width:"<StepInput value=ticks.min_chars step="1" min="0" /></label>
+    }
 }
 
 #[component]
@@ -1058,8 +998,7 @@ fn AspectRatio(
             <Show when=move || !is_dual_env() fallback=env>
                 <input type="number" step=0.1 min=0.1 value=right_value on:change=on_right />
             </Show>
-            " = "
-            {result_value}
+            " = " {result_value}
         </span>
     }
 }
@@ -1079,30 +1018,20 @@ fn TooltipCard<X: Tick, Y: Tick>(tooltip: Tooltip<X, Y>) -> impl IntoView {
             <legend>"Tooltip"</legend>
             <p>
                 <label for="tooltip_hover">"Hover"</label>
-                <span>
-                    <SelectTooltipPlacement id="tooltip_hover" hover=placement />
-                </span>
+                <span><SelectTooltipPlacement id="tooltip_hover" hover=placement /></span>
             </p>
             <p>
                 <label for="tooltip_sort">"Sort by"</label>
-                <span>
-                    <SelectSortBy id="tooltip_sort" sort_by=sort_by />
-                </span>
+                <span><SelectSortBy id="tooltip_sort" sort_by=sort_by /></span>
             </p>
             <p>
                 <label for="tooltip_distance">"Cursor distance"</label>
-                <span>
-                    <StepInput id="tooltip_distance" value=cursor_distance step="0.1" min="0" />
-                </span>
+                <span><StepInput id="tooltip_distance" value=cursor_distance step="0.1" min="0" /></span>
             </p>
             <p>
                 <span>
-                    <input
-                        type="checkbox"
-                        id="skip_missing"
-                        checked=skip_missing
-                        on:input=move |ev| skip_missing.set(event_target_checked(&ev))
-                    />
+                    <input type="checkbox" id="skip_missing" checked=skip_missing
+                        on:input=move |ev| skip_missing.set(event_target_checked(&ev)) />
                 </span>
                 <label for="skip_missing">"Skip missing?"</label>
             </p>
@@ -1116,35 +1045,23 @@ fn SeriesLineOpts<Y: Tick>(line: Line<Wave, Y>, colour: Colour) -> impl IntoView
         <p>
             <label for="line_name">"Name"</label>
             <span>
-                <input
-                    type="text"
-                    id="line_name"
-                    style="width: 10ch;"
+                <input type="text" id="line_name" style="width: 10ch;"
                     value=line.name
-                    on:input=move |ev| line.name.set(event_target_value(&ev))
-                />
+                    on:input=move |ev| line.name.set(event_target_value(&ev)) />
                 " "
                 <label>
-                    "width:" <StepInput id="line_width" value=line.width step="0.1" min="0.1" />
+                    "width:"
+                    <StepInput id="line_width" value=line.width step="0.1" min="0.1" />
                 </label>
             </span>
         </p>
         <p>
             <label for="line_interpolation">"Interpolation"</label>
-            <span>
-                <SelectLineInterpolation interpolation=line.interpolation />
-            </span>
+            <span><SelectLineInterpolation interpolation=line.interpolation /></span>
         </p>
         <p>
             <label for="line_colour">"Colour"</label>
-            <span>
-                <SelectOptionColour
-                    id="line_colour"
-                    colour=line.colour
-                    default=colour
-                    none="use scheme"
-                />
-            </span>
+            <span><SelectOptionColour id="line_colour" colour=line.colour default=colour none="use scheme" /></span>
         </p>
         <p>
             <label for="line_marker">"Marker"</label>
@@ -1153,37 +1070,20 @@ fn SeriesLineOpts<Y: Tick>(line: Line<Wave, Y>, colour: Colour) -> impl IntoView
                 " "
                 <label>
                     "scale:"
-                    <StepInput
-                        id="line_marker_scale"
-                        value=line.marker.scale
-                        step="0.1"
-                        min="0.0"
-                    />
+                    <StepInput id="line_marker_scale" value=line.marker.scale step="0.1" min="0.0" />
                 </label>
             </span>
         </p>
         <p>
             <label for="line_marker_colour">"Colour"</label>
-            <span>
-                <SelectOptionColour
-                    id="line_marker_colour"
-                    colour=line.marker.colour
-                    default=colour
-                    none="use line"
-                />
-            </span>
+            <span><SelectOptionColour id="line_marker_colour" colour=line.marker.colour default=colour none="use line" /></span>
         </p>
         <p>
             <label for="line_marker_border">"Border"</label>
             <span>
                 <StepInput value=line.marker.border_width step="0.1" min="0.0" />
                 " "
-                <SelectOptionColour
-                    id="line_marker_border"
-                    colour=line.marker.border
-                    default=colour
-                    none="use line"
-                />
+                <SelectOptionColour id="line_marker_border" colour=line.marker.border default=colour none="use line" />
             </span>
         </p>
     }
